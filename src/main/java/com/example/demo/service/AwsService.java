@@ -37,7 +37,7 @@ public class AwsService {
 	    private S3BucketRepository s3BucketRepository;
 
 	    @Async
-	    public CompletableFuture<Void> discoverEC2Instances(Long jobId) {
+	    public void discoverEC2Instances(Long jobId) {
 	        try {
 	            DescribeInstancesRequest request = DescribeInstancesRequest.builder().build();
 	            DescribeInstancesResponse response = ec2Client.describeInstances(request);
@@ -52,11 +52,11 @@ public class AwsService {
 	        } catch (Exception e) {
 	            updateJobStatus(jobId, "Failed");
 	        }
-	        return CompletableFuture.completedFuture(null);
+	        //return CompletableFuture.completedFuture(null);
 	    }
 
 	    @Async
-	    public CompletableFuture<Void> discoverS3Buckets(Long jobId) {//void
+	    public void discoverS3Buckets(Long jobId) {//void
 	        try {
 	            ListBucketsResponse response = s3Client.listBuckets();
 	            response.buckets().forEach(bucket -> {
@@ -68,7 +68,7 @@ public class AwsService {
 	        } catch (Exception e) {
 	            updateJobStatus(jobId, "Failed");
 	        }
-	        return CompletableFuture.completedFuture(null);
+	        //return CompletableFuture.completedFuture(null);
 	    }
 
 	    private void updateJobStatus(Long jobId, String status) {
